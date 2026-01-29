@@ -1,8 +1,6 @@
 'use client'
 
-import React from "react"
-
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -34,8 +32,8 @@ export default function LoginPage() {
   return (
     <div style={{ maxWidth: '400px', margin: '100px auto', padding: '20px' }}>
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '15px' }}>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+        <div>
           <label htmlFor="email">Email:</label>
           <input
             id="email"
@@ -43,10 +41,10 @@ export default function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+            style={{ width: '100%', padding: '8px', marginTop: '5px', boxSizing: 'border-box' }}
           />
         </div>
-        <div style={{ marginBottom: '15px' }}>
+        <div>
           <label htmlFor="password">Password:</label>
           <input
             id="password"
@@ -54,14 +52,13 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+            style={{ width: '100%', padding: '8px', marginTop: '5px', boxSizing: 'border-box' }}
           />
         </div>
         <button
           type="submit"
           disabled={loading}
           style={{
-            width: '100%',
             padding: '10px',
             backgroundColor: loading ? '#ccc' : '#000',
             color: '#fff',
