@@ -16,16 +16,26 @@ export default function LoginPage() {
     setMessage('')
 
     try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 5000)
+
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+        signal: controller.signal,
       })
+
+      clearTimeout(timeoutId)
 
       const data = await res.json()
       setMessage(data.message || (res.ok ? 'Login successful!' : 'Login failed'))
     } catch (error) {
-      setMessage('Error: ' + (error instanceof Error ? error.message : 'Unknown error'))
+      if (error instanceof Error) {
+        setMessage('Error: ' + error.message)
+      } else {
+        setMessage('Error: Unknown error')
+      }
     } finally {
       setLoading(false)
     }

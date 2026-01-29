@@ -5,10 +5,11 @@ type ResponseData = {
   timestamp: string
 }
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
+  await new Promise(resolve => setTimeout(resolve, 0))
   res.status(200).json({
     message: 'Test API working',
     timestamp: new Date().toISOString(),
