@@ -121,17 +121,25 @@
     box-sizing: border-box;
     @apply border-border outline-ring/50;
   }
-  html {
+  body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    @apply bg-background text-foreground;
   }
-  body {
-    background-color: #fff; /* Preserved from existing */
-    color: #000; /* Preserved from existing */
-    line-height: 1.6; /* Preserved from existing */
-    @apply bg-background text-foreground; /* Added from shadcn, will be overridden by direct color properties */
-  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
 }

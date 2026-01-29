@@ -1,5 +1,5 @@
 import React from "react"
-import './globals.css'; // Import globals.css at the top of the file
+import './globals.css'
 
 export const metadata = {
   title: 'Auth App',

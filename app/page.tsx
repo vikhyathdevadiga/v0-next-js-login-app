@@ -1,7 +1,5 @@
-"use client"
+import { redirect } from 'next/navigation'
 
-import RootLayout from "../src/app/layout"
-
-export default function SyntheticV0PageForDeployment() {
-  return <RootLayout />
+export default function Page() {
+  redirect('/auth/login')
 }
