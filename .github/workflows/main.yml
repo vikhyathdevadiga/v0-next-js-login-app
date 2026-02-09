@@ -1,0 +1,35 @@
+name: Sequential Orchestrator
+
+on:
+  repository_dispatch:
+    types:
+      - 'vercel.deployment.ready'
+
+jobs:
+  workflow-1-build:
+    uses: ./.github/workflows/workflow-1-build.yml@main
+
+  workflow-2-test:
+    runs-on: ubuntu-latest
+    needs: workflow-1-build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unit & Integration Tests
+        run: |
+          npm ci
+          npm run test
+          npm run test:integration
+      - name: Lint
+        run: npm run lint
+
+  workflow-3-deploy:
+    runs-on: ubuntu-latest
+    needs: [workflow-1-build, workflow-2-test]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to Vercel
+        uses: vercel/action@v1
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
