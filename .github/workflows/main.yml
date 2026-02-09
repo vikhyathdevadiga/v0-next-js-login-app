@@ -5,22 +5,32 @@ on: [push]
 jobs:
   request-approval:
     runs-on: ubuntu-latest
+    timeout-minutes: 1  # 1 minute timeout (minimum allowed)
     steps:
-      - name: Wait for Approval with Timeout
+      - name: Simulate Approval Wait with Timeout
         run: |
           echo "Waiting for approval (10 seconds)..."
-          timeout 10 bash -c 'while [ ! -f /tmp/approved ]; do sleep 1; done' || {
-            echo "Approval timeout - failing workflow"
+          timeout 10s sleep 15 || {
+            echo "❌ Approval timeout - failing workflow"
             exit 1
           }
-        # In practice, you'd integrate with your approval system API
-
+        
   wait-for-build:
     needs: request-approval
+    runs-on: ubuntu-latest
     steps:
-      - run: echo "Building..."
+      - name: Build
+        run: |
+          echo "✅ Building application..."
+          sleep 2
+          echo "Build complete"
 
   deploy-to-production:
     needs: wait-for-build
+    runs-on: ubuntu-latest
     steps:
-      - run: echo "Deploying..."
+      - name: Deploy
+        run: |
+          echo "✅ Deploying to production..."
+          sleep 2
+          echo "Deployment complete"
